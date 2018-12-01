@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-node-port
+spec:
+  type: NodePort
+  ports:
+    - port: 3050 # This is the port that other pods may use to access our web pod
+      targetPort: 3000 # pod port that we need to open access to
+      nodePort: 31515 # random number 30000 - 32767, This is used to access the pod from our browser
+  selector:
+    component: web
