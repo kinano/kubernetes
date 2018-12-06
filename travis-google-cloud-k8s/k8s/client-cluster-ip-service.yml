@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-cluster-ip-service
+spec:
+  type: ClusterIP
+  # selector is how other pods can reference the selected pod
+  selector:
+    component: web
+  # How can other pods access our pod?
+  ports:
+    - port: 3000
+      targetPort: 3000
