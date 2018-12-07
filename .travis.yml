@@ -37,6 +37,6 @@ deploy:
   # k8s does not have any thing automatic to build a cluster on Travis
   # We will use a custom deploy script
   provider: script
-  script: bash ./travis-google-cloud-k8s/deploy.sh
+  script: bash ./deploy.sh
   on:
     branch: master
