@@ -10,7 +10,7 @@ docker push kinano/multi-container-client:$SHA
 docker push kinano/multi-container-server:$SHA
 docker push kinano/multi-container-worker:$SHA
 
-kubectl apply -f k8s
+kubectl apply -f ./travis-google-cloud-k8s/k8s
 
 kubectl set image deployments/server-deployment server=kinano/multi-container-server:$SHA
 kubectl set image deployments/client-deployment client=kinano/multi-container-client:$SHA
