@@ -24,7 +24,7 @@ before_install:
   # Set a compute zone
   - gcloud config set compute/zone us-east1-b
   # Get the credentials for the cluster name
-  - gloud container clusters get-credentials multi-cluster
+  - gcloud container clusters get-credentials multi-cluster
   # Login to Docker CLI
   - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
   - docker build -t kinano/react-test -f ./travis-google-cloud-k8s/client/Dockerfile.dev
