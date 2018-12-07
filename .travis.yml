@@ -1,0 +1,42 @@
+# 
+sudo: required
+services:
+  - docker
+env:
+  global:
+    # Get the latest git commit sha
+    - SHA=$(git rev-parse HEAD)
+    # Disable gcloud sdk prompts
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+  # Decrypt the google cloud service account and place it in the project directory
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  # Install Google cloud SDK
+  -  curl https://sdk.cloud.google.com | bash > /dev/null;
+  # Apply Google SDK config
+  -  source $HOME/google-cloud-sdk/path.bash.inc
+  # Update goodle cloud kubectl
+  - gcloud components update kubectl
+  # authorize google cloud sdk
+  - gcloud auth activate-service-account --key-file service-account.json
+  # Tell gcloud which project ID to work on
+  - gcloud config set project multi-k8s-224717
+  # Set a compute zone
+  - gcloud config set compute/zone us-east1-b
+  # Get the credentials for the cluster name
+  - gloud container clusters get-credentials multi-cluster
+  # Login to Docker CLI
+  - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+  - docker build -t kinano/react-test -f ./travis-google-cloud-k8s/client/Dockerfile.dev
+
+script:
+  # Run automated tests and give npm a signal when they pass
+  - docker run kinano/react-test npm test -- --coverage
+
+deploy:
+  # k8s does not have any thing automatic to build a cluster on Travis
+  # We will use a custom deploy script
+  provider: script
+  script: bash ./travis-google-cloud-k8s/deploy.sh
+  on:
+    branch: master
