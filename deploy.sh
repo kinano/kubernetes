@@ -1,4 +1,4 @@
-docker build -t kinano/multi-container-client:latest -t kinano/multi-container-client:$SHA  -f ./travis-google-cloud-k8s/client/client/Dockerfile ./travis-google-cloud-k8s/client
+docker build -t kinano/multi-container-client:latest -t kinano/multi-container-client:$SHA  -f ./travis-google-cloud-k8s/client/Dockerfile ./travis-google-cloud-k8s/client
 docker build -t kinano/multi-container-server:latest -t kinano/multi-container-server:$SHA -f ./travis-google-cloud-k8s/server/Dockerfile ./travis-google-cloud-k8s/server
 docker build -t kinano/multi-container-worker:latest -t kinano/multi-container-worker:$SHA -f ./travis-google-cloud-k8s/worker/Dockerfile ./travis-google-cloud-k8s/worker
 
