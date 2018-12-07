@@ -27,7 +27,7 @@ before_install:
   - gcloud container clusters get-credentials multi-cluster
   # Login to Docker CLI
   - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
-  - docker build -t kinano/react-test -f ./travis-google-cloud-k8s/client/Dockerfile.dev
+  - docker build -t kinano/react-test -f ./travis-google-cloud-k8s/client/Dockerfile.dev ./travis-google-cloud-k8s/client
 
 script:
   # Run automated tests and give npm a signal when they pass
